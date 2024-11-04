@@ -1,0 +1,11 @@
+{
+  "augment.dynamicedge.cake_destroyer": "Cake Destroyer",
+  "augment.dynamicedge.cake_destroyer.description": "Makes sugar drop occasionally.",
+  "augment.dynamicedge.cake_destroyer.leveling_criteria": "Levels by destroying cakes.",
+  "augment.dynamicedge.oceanic": "Oceanic",
+  "augment.dynamicedge.oceanic.description": "Makes you swim faster.",
+  "augment.dynamicedge.oceanic.leveling_criteria": "Levels by being underwater.",
+
+  "key.dynamicedge.expand_tooltip": "Expand Tooltip",
+  "key.dynamicedge.category": "Dynamic Edge"
+}
