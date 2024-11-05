@@ -22,7 +22,8 @@ public interface AugmentEvent {
          * @param gear    The piece of gear.
          * @param player  The player carrying the item.
          * @param augment The augment that gained progress.
+         * @param progressAmount The amount of progress acquired.
          */
-        void progress(ItemStack gear, Player player, Augment augment);
+        void progress(ItemStack gear, Player player, Augment augment, Integer progressAmount);
     }
 }

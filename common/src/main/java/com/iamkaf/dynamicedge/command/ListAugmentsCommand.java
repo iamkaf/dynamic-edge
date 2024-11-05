@@ -6,7 +6,9 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 
 public class ListAugmentsCommand implements AbstractSubCommand {
     public static final String NAME = "list";
@@ -18,8 +20,11 @@ public class ListAugmentsCommand implements AbstractSubCommand {
 
         Augments.AUGMENT_REGISTRY.stream().forEach(augment -> {
             var line = augment.getName()
+                    .withStyle(Style.EMPTY.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                            String.format("/edge add @p %s", augment.id())
+                    )))
                     .withStyle(ChatFormatting.AQUA)
-                    .append(" - ")
+                    .append(Component.literal(" - ").withStyle(ChatFormatting.WHITE))
                     .append(augment.getDescription()
                             .withStyle(ChatFormatting.GRAY)
                             .append(Component.literal(" [" + augment.id().toString() + "]")));

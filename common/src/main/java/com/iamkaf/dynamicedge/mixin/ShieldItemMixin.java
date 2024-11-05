@@ -16,7 +16,7 @@ import java.util.List;
  * This mixin is needed because ShieldItem is a piece of gear, but it doesn't call super.
  * @see ItemMixin
  */
-@Mixin(ShieldItem.class)
+@Mixin(value = ShieldItem.class, priority = 999)
 public abstract class ShieldItemMixin extends Item {
     public ShieldItemMixin(Properties properties) {
         super(properties);

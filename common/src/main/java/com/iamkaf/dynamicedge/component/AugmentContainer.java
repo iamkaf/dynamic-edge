@@ -2,14 +2,18 @@ package com.iamkaf.dynamicedge.component;
 
 import com.google.common.collect.ImmutableMap;
 import com.iamkaf.dynamicedge.augment.Augment;
+import com.iamkaf.dynamicedge.registry.DataComponents;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("DataFlowIssue") // trust me bro
 public record AugmentContainer(boolean enabled, Map<ResourceLocation, Integer> augments) {
     public static final AugmentContainer EMPTY = new AugmentContainer(true, Map.of());
     private static final int MAX_SIZE = 256;
@@ -55,12 +59,15 @@ public record AugmentContainer(boolean enabled, Map<ResourceLocation, Integer> a
         if (!contains(augment.id())) {
             return set(augment, progress);
         }
-        //noinspection DataFlowIssue
         int currentProgress = get(augment.id());
         return set(augment, currentProgress + progress);
     }
 
     private AugmentContainer copy() {
         return new AugmentContainer(enabled, ImmutableMap.copyOf(augments));
+    }
+
+    public boolean isActive(Augment augment) {
+        return contains(augment.id()) && get(augment.id()) >= augment.maxProgress();
     }
 }

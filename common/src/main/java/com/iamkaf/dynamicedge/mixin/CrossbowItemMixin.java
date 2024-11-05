@@ -16,7 +16,7 @@ import java.util.List;
  * This mixin is needed because CrossbowItem is a piece of gear, but it doesn't call super.
  * @see ItemMixin
  */
-@Mixin(CrossbowItem.class)
+@Mixin(value = CrossbowItem.class, priority = 999)
 public abstract class CrossbowItemMixin extends Item {
     public CrossbowItemMixin(Properties properties) {
         super(properties);

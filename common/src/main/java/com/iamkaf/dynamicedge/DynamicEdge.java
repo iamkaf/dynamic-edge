@@ -1,7 +1,10 @@
 package com.iamkaf.dynamicedge;
 
 import com.iamkaf.amber.api.core.AmberMod;
+import com.iamkaf.dynamicedge.api.event.AugmentEvent;
+import com.iamkaf.dynamicedge.augment.Augment;
 import com.iamkaf.dynamicedge.command.DynamicEdgeCommands;
+import com.iamkaf.dynamicedge.component.AugmentContainer;
 import com.iamkaf.dynamicedge.registry.Augments;
 import com.iamkaf.dynamicedge.registry.CreativeModeTabs;
 import com.iamkaf.dynamicedge.registry.DataComponents;
@@ -10,7 +13,10 @@ import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.logging.LogUtils;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
@@ -39,7 +45,16 @@ public class DynamicEdge extends AmberMod {
         Augments.init();
         DynamicEdgeCommands.init();
         KeyMappingRegistry.register(TOOLTIP_KEYBIND);
+        AugmentEvent.AUGMENT_PROGRESS.register(DynamicEdge::onAugmentProgress);
     }
+
+    private static void onAugmentProgress(ItemStack stack, Player player, Augment augment, Integer progress) {
+        DataComponentType<AugmentContainer> component = DataComponents.AUGMENTS_DATA_COMPONENT.get();
+        AugmentContainer augmentContainer = stack.getOrDefault(component, AugmentContainer.EMPTY);
+        AugmentContainer newComponent = augmentContainer.addProgress(augment, progress);
+        stack.set(component, newComponent);
+    }
+
 
     /**
      * Creates resource location in the mod namespace with the given path.

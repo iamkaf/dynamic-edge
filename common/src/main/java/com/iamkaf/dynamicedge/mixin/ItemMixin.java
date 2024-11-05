@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * This mixin adds the augments info to the item's tooltip.
  */
-@Mixin(Item.class)
+@Mixin(value = Item.class, priority = 999)
 public class ItemMixin {
     @Inject(method =
             "appendHoverText(Lnet/minecraft/world/item/ItemStack;" + "Lnet/minecraft/world/item" +
@@ -41,7 +41,7 @@ public class ItemMixin {
             if (augment == null) {
                 throw new IllegalStateException("wat?");
             }
-            augment.appendTooltip(tooltipComponents);
+            augment.appendTooltip(stack, tooltipComponents);
         }
     }
 }
